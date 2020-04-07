@@ -57,7 +57,7 @@ def main(x1_min, x1_max, x2_min, x2_max, x3_min, x3_max,matrix_y,m=3,N=4,p=0.95)
     b3 = np.linalg.det([[1,mx1,mx2,my],[mx1,a11,a12,a1],[mx2,a12,a22,a2],[mx3,a13,a23,a3]]) / det_denominator
 
     print(f"Regression y = {round(b0,2)} + {round(b1,2)}*X1 + {round(b2,2)}*X2 + {round(b3,2)}*X3")
-    #ching
+    #checking
     y = [b0 + matrix_x_natural[_][0]*b1 + matrix_x_natural[_][1]*b2 + matrix_x_natural[_][2]*b3 for _ in range(N)]
 
 
@@ -184,7 +184,7 @@ def after_main(x1_min, x1_max, x2_min, x2_max, x3_min, x3_max,m=3,N=8,p=0.95):
         print(f"Regression with interaction effect:\ny = {round(b2_s[0],3)} + {round(b2_s[1],3)} * x1 + {round(b2_s[2],3)} * x2 + "
             f"{round(b2_s[3],3)} * x3 + {round(b2_s[4],3)} * x1x2 + {round(b2_s[5],3)} * x1x3 + {round(b2_s[6],3)} * x2x3 + {round(b2_s[7],3)} * x1x2x3")
 
-        #ching dispersion by Kohren
+        #checking dispersion by Kohren
         dispersion1 = sum([(_ - y_average_list[0]) ** 2 for _ in matrix_y[0]]) / m
         dispersion2 = sum([(_ - y_average_list[1]) ** 2 for _ in matrix_y[1]]) / m
         dispersion3 = sum([(_ - y_average_list[2]) ** 2 for _ in matrix_y[2]]) / m
@@ -205,13 +205,12 @@ def after_main(x1_min, x1_max, x2_min, x2_max, x3_min, x3_max,m=3,N=8,p=0.95):
             print(f"Inhomogeneous dispersion with {p} probability:\n{round(Gp,3)} > {Gt}")
             return False
 
-        # Перевірка значущості коефіцієнтів за критерієм Стьюдента
-        # Оцінка генеральної дисперсії відтворюваності
+
         s_b = sum(dispersion_list) / N
         s2_b_s = s_b / (N * m)
         s_b_s = pow(s2_b_s, 1 / 2)
 
-        # Оцінки коефіцієнтів
+
         beta0 = sum([matrix_x_normal[_][0] * y_average_list[_] for _ in range(len(matrix_x_normal))]) / N
         beta1 = sum([matrix_x_normal[_][1] * y_average_list[_] for _ in range(len(matrix_x_normal))]) / N
         beta2 = sum([matrix_x_normal[_][2] * y_average_list[_] for _ in range(len(matrix_x_normal))]) / N
