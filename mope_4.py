@@ -220,56 +220,48 @@ def after_main(x1_min, x1_max, x2_min, x2_max, x3_min, x3_max,m=3,N=8,p=0.95):
         beta6 = sum([matrix_x_normal[_][6] * y_average_list[_] for _ in range(len(matrix_x_normal))]) / N
         beta7 = sum([matrix_x_normal[_][7] * y_average_list[_] for _ in range(len(matrix_x_normal))]) / N
 
+        beta_list = [beta0,beta1,beta2,beta3,beta4,beta5,beta6,beta7]
 
-        t0 = abs(beta0) / s_b_s
-        t1 = abs(beta1) / s_b_s
-        t2 = abs(beta2) / s_b_s
-        t3 = abs(beta3) / s_b_s
-        t4 = abs(beta4) / s_b_s
-        t5 = abs(beta5) / s_b_s
-        t6 = abs(beta6) / s_b_s
-        t7 = abs(beta7) / s_b_s
+        t_list = [abs(beta)/s_b_s for beta in beta_list ]
+
 
         f3 = f1 * f2
-
+        #Creating empty numpy array
+        beta_s = []
         t_table = t.ppf((1 + p) / 2, f3)
+        for i in range(len(beta_list)):
+            if t_list[i]>t_table:
+                beta_s.append(beta_list[i])
+            else:
+                beta_s.append(0)
 
-        b00 = beta0 if t0 > t_table else 0
-        b11 = beta1 if t1 > t_table else 0
-        b22 = beta2 if t2 > t_table else 0
-        b33 = beta3 if t3 > t_table else 0
-        b44 = beta4 if t4 > t_table else 0
-        b55 = beta5 if t5 > t_table else 0
-        b66 = beta6 if t6 > t_table else 0
-        b77 = beta7 if t7 > t_table else 0
-        beta_s = np.array([b00, b11, b22, b33, b44, b55, b66, b77])
 
-        ch0 = b00 + b11 * matrix_x_natural[0][1] + b22 * matrix_x_natural[0][2] + b33 * matrix_x_natural[0][3] + \
-                 b44 * matrix_x_natural[0][4] + b55 * matrix_x_natural[0][5] + b66 * matrix_x_natural[0][6] + \
-                 b77 * matrix_x_natural[0][7]
-        ch1 = b00 + b11 * matrix_x_natural[1][1] + b22 * matrix_x_natural[1][2] + b33 * matrix_x_natural[1][3] + \
-                 b44 * matrix_x_natural[1][4] + b55 * matrix_x_natural[1][5] + b66 * matrix_x_natural[1][6] + \
-                 b77 * matrix_x_natural[1][7]
-        ch2 = b00 + b11 * matrix_x_natural[2][1] + b22 * matrix_x_natural[2][2] + b33 * matrix_x_natural[2][3] + \
-                 b44 * matrix_x_natural[2][4] + b55 * matrix_x_natural[2][5] + b66 * matrix_x_natural[2][6] + \
-                 b77 * matrix_x_natural[2][7]
-        ch3 = b00 + b11 * matrix_x_natural[3][1] + b22 * matrix_x_natural[3][2] + b33 * matrix_x_natural[3][3] + \
-                 b44 * matrix_x_natural[3][4] + b55 * matrix_x_natural[3][5] + b66 * matrix_x_natural[3][6] + \
-                 b77 * matrix_x_natural[3][7]
-        ch4 = b00 + b11 * matrix_x_natural[4][1] + b22 * matrix_x_natural[4][2] + b33 * matrix_x_natural[4][3] + \
-                 b44 * matrix_x_natural[4][4] + b55 * matrix_x_natural[4][5] + b66 * matrix_x_natural[4][6] + \
-                 b77 * matrix_x_natural[4][7]
-        ch5 = b00 + b11 * matrix_x_natural[5][1] + b22 * matrix_x_natural[5][2] + b33 * matrix_x_natural[5][3] + \
-                 b44 * matrix_x_natural[5][4] + b55 * matrix_x_natural[5][5] + b66 * matrix_x_natural[5][6] + \
-                 b77 * matrix_x_natural[5][7]
-        ch6 = b00 + b11 * matrix_x_natural[6][1] + b22 * matrix_x_natural[6][2] + b33 * matrix_x_natural[6][3] + \
-                 b44 * matrix_x_natural[6][4] + b55 * matrix_x_natural[6][5] + b66 * matrix_x_natural[6][6] + \
-                 b77 * matrix_x_natural[6][7]
-        ch7 = b00 + b11 * matrix_x_natural[7][1] + b22 * matrix_x_natural[7][2] + b33 * matrix_x_natural[7][3] + \
-                 b44 * matrix_x_natural[7][4] + b55 * matrix_x_natural[7][5] + b66 * matrix_x_natural[7][6] + \
-                 b77 * matrix_x_natural[7][7]
+        ch0 = beta_s[0] + beta_s[1] * matrix_x_natural[0][1] + beta_s[2] * matrix_x_natural[0][2] + beta_s[3] * matrix_x_natural[0][3] + \
+                 beta_s[4] * matrix_x_natural[0][4] + beta_s[5] * matrix_x_natural[0][5] + beta_s[6] * matrix_x_natural[0][6] + \
+                 beta_s[7] * matrix_x_natural[0][7]
+        ch1 = beta_s[0] + beta_s[1] * matrix_x_natural[1][1] + beta_s[2] * matrix_x_natural[1][2] + beta_s[3] * matrix_x_natural[1][3] + \
+                 beta_s[4] * matrix_x_natural[1][4] + beta_s[5] * matrix_x_natural[1][5] + beta_s[6] * matrix_x_natural[1][6] + \
+                 beta_s[7] * matrix_x_natural[1][7]
+        ch2 = beta_s[0] + beta_s[1] * matrix_x_natural[2][1] + beta_s[2] * matrix_x_natural[2][2] + beta_s[3] * matrix_x_natural[2][3] + \
+                 beta_s[4] * matrix_x_natural[2][4] + beta_s[5] * matrix_x_natural[2][5] + beta_s[6] * matrix_x_natural[2][6] + \
+                 beta_s[7] * matrix_x_natural[2][7]
+        ch3 = beta_s[0] + beta_s[1] * matrix_x_natural[3][1] + beta_s[2] * matrix_x_natural[3][2] + beta_s[3] * matrix_x_natural[3][3] + \
+                 beta_s[4] * matrix_x_natural[3][4] + beta_s[5] * matrix_x_natural[3][5] + beta_s[6] * matrix_x_natural[3][6] + \
+                 beta_s[7] * matrix_x_natural[3][7]
+        ch4 = beta_s[0] + beta_s[1] * matrix_x_natural[4][1] + beta_s[2] * matrix_x_natural[4][2] + beta_s[3] * matrix_x_natural[4][3] + \
+                 beta_s[4] * matrix_x_natural[4][4] + beta_s[5] * matrix_x_natural[4][5] + beta_s[6] * matrix_x_natural[4][6] + \
+                 beta_s[7] * matrix_x_natural[4][7]
+        ch5 = beta_s[0] + beta_s[1] * matrix_x_natural[5][1] + beta_s[2] * matrix_x_natural[5][2] + beta_s[3] * matrix_x_natural[5][3] + \
+                 beta_s[4] * matrix_x_natural[5][4] + beta_s[5] * matrix_x_natural[5][5] + beta_s[6] * matrix_x_natural[5][6] + \
+                 beta_s[7] * matrix_x_natural[5][7]
+        ch6 = beta_s[0] + beta_s[1] * matrix_x_natural[6][1] + beta_s[2] * matrix_x_natural[6][2] + beta_s[3] * matrix_x_natural[6][3] + \
+                 beta_s[4] * matrix_x_natural[6][4] + beta_s[5] * matrix_x_natural[6][5] + beta_s[6] * matrix_x_natural[6][6] + \
+                 beta_s[7] * matrix_x_natural[6][7]
+        ch7 = beta_s[0] + beta_s[1] * matrix_x_natural[7][1] + beta_s[2] * matrix_x_natural[7][2] + beta_s[3] * matrix_x_natural[7][3] + \
+                 beta_s[4] * matrix_x_natural[7][4] + beta_s[5] * matrix_x_natural[7][5] + beta_s[6] * matrix_x_natural[7][6] + \
+                 beta_s[7] * matrix_x_natural[7][7]
         list_ch = [ch0, ch1, ch2, ch3, ch4, ch5, ch6, ch7]
-
+        beta_s = np.array(beta_s)
         d = len(beta_s[np.array(beta_s) != 0])
         f4 = N - d
         s_ad = m / f4 * sum([(list_ch[_] - y_average_list[_]) ** 2 for _ in range(len(y_average_list))])
