@@ -193,6 +193,8 @@ def after_main(x1_min, x1_max, x2_min, x2_max, x3_min, x3_max,m=3,N=8,p=0.95):
         dispersion6 = sum([(_ - y_average_list[5]) ** 2 for _ in matrix_y[5]]) / m
         dispersion7 = sum([(_ - y_average_list[6]) ** 2 for _ in matrix_y[6]]) / m
         dispersion8 = sum([(_ - y_average_list[7]) ** 2 for _ in matrix_y[7]]) / m
+
+        #Dispersion list
         dispersion_list = [dispersion1, dispersion2, dispersion3, dispersion4, dispersion5, dispersion6, dispersion7, dispersion8]
 
         Gp = max(dispersion_list) / sum(dispersion_list)
@@ -219,14 +221,16 @@ def after_main(x1_min, x1_max, x2_min, x2_max, x3_min, x3_max,m=3,N=8,p=0.95):
         beta5 = sum([matrix_x_normal[_][5] * y_average_list[_] for _ in range(len(matrix_x_normal))]) / N
         beta6 = sum([matrix_x_normal[_][6] * y_average_list[_] for _ in range(len(matrix_x_normal))]) / N
         beta7 = sum([matrix_x_normal[_][7] * y_average_list[_] for _ in range(len(matrix_x_normal))]) / N
-
+        #Beta list
         beta_list = [beta0,beta1,beta2,beta3,beta4,beta5,beta6,beta7]
 
+        #t list
         t_list = [abs(beta)/s_b_s for beta in beta_list ]
 
 
         f3 = f1 * f2
-        #Creating empty numpy array
+
+        #b list
         beta_s = []
         t_table = t.ppf((1 + p) / 2, f3)
         for i in range(len(beta_list)):
